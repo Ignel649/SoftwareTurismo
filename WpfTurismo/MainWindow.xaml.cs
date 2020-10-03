@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Helpers;
 using LiveCharts.Wpf;
+using Microsoft.Win32;
 
 namespace WpfTurismo
 {
@@ -96,7 +97,7 @@ namespace WpfTurismo
                     GridFina.Visibility = Visibility.Collapsed;
                     break;
                 case 4:
-                    GridCursor.Background = Brushes.Red;
+                    GridCursor.Background = Brushes.AliceBlue;
                     GridMain.Visibility = Visibility.Collapsed;
                     GridDepa.Visibility = Visibility.Collapsed;
                     GridArri.Visibility = Visibility.Collapsed;
@@ -110,6 +111,38 @@ namespace WpfTurismo
         private void Button_Click_Cerrar(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        OpenFileDialog openFileDialog1 = new OpenFileDialog();
+        private void ExaminarFoto(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                openFileDialog1.Title = "Abrir imagen";
+                openFileDialog1.FileName = "";
+                openFileDialog1.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+                openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+                if (openFileDialog1.ShowDialog() == true)
+                {
+                    foreach (string filename in openFileDialog1.FileNames)
+                        ListBox2.Items.Add(filename);
+                }
+
+            }
+            catch(Exception)
+            {
+
+            }
+        }
+
+        private void ExaminarFotoEdi(object sender, RoutedEventArgs e)
+        {
+
+            if (openFileDialog1.ShowDialog() == true)
+            {
+                LabelBox1.Text = openFileDialog1.FileName;
+            }
         }
     }
 }

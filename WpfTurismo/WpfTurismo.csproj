@@ -120,9 +120,6 @@
     <Resource Include="Imagenes\Logo_turismo_real.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Imagenes\logo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Imagenes\model_travel.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

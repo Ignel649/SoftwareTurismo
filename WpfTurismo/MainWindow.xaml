@@ -31,17 +31,59 @@
                 <Button Uid="3" Width="210" Height="50" Content="Administracion" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" Click="Button_Click"></Button>
                 <Button Uid="4" Width="210" Height="50" Content="Finanzas" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" Click="Button_Click"></Button>
             </StackPanel>
-            <Grid x:Name="GridCursor" Width="210" Height="5" Background="#EC5269" HorizontalAlignment="Left" Margin="10 0"/>
+            <Grid x:Name="GridCursor" Width="210" Height="5" Background="MistyRose" HorizontalAlignment="Left" Margin="10 0"/>
         </Grid>
         <Grid Height="460" Background="White" Visibility="Visible">
             <Grid x:Name="GridMain" Height="460" Background="MistyRose" Visibility="Collapsed">
                 <Image Source="C:\Users\benja\source\repos\WpfTurismo\WpfTurismo\Imagenes\Logo_turismo_real.png" Margin="10,10,752,246"/>
                 <Image Source="C:\Users\benja\source\repos\WpfTurismo\WpfTurismo\Imagenes\model_travel.png" Margin="451,0,10,0"/>
             </Grid>
-            <Grid x:Name="GridDepa" Height="460" Background="LightYellow" Visibility="Collapsed">
-
+            <Grid x:Name="GridDepa" Height="460" Background="#EC5259" Visibility="Visible">
+                <Grid Height="460" Width="1080" HorizontalAlignment="Left">
+                    <TextBox HorizontalAlignment="Left" Height="30" Margin="50,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Background="White" BorderBrush="#001f32" Foreground="#001f32"/>
+                    <Button Content="Buscar" HorizontalAlignment="Left" Margin="355,25,0,0" VerticalAlignment="Top" Width="75" Height="30" Background="#001f32" Foreground="White" BorderBrush="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="50,90,0,0" TextWrapping="Wrap" Text="Edificio :" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
+                    <Label Content="Nombre :" HorizontalAlignment="Left" Margin="50,135,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label Content="Dirección :" HorizontalAlignment="Left" Margin="50,175,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label Content="Teléfono :" HorizontalAlignment="Left" Margin="50,215,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label Content="Región :" HorizontalAlignment="Left" Margin="49,265,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label Content="Comuna :" HorizontalAlignment="Left" Margin="50,305,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBox HorizontalAlignment="Left" Height="29" Margin="144,135,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" BorderBrush="#001f32" Foreground="White" />
+                    <TextBox HorizontalAlignment="Left" Height="29" Margin="144,175,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" BorderBrush="#001f32" Foreground="White"/>
+                    <TextBox HorizontalAlignment="Left" Height="29" Margin="144,215,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="150" BorderBrush="#001f32" Foreground="White"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="144,265,0,0" VerticalAlignment="Top" Width="250" BorderBrush="#001f32" Height="29"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="144,305,0,0" VerticalAlignment="Top" Width="250" BorderBrush="#001f32" Height="29"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="450,90,0,0" TextWrapping="Wrap" Text="Departamento :" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
+                    <Label Content="Habitaciones :" HorizontalAlignment="Left" Margin="450,135,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label Content="Metros Cuadrados (m²) :" HorizontalAlignment="Left" Margin="450,175,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label Content="Baños :" HorizontalAlignment="Left" Margin="450,215,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label Content="Piso :" HorizontalAlignment="Left" Margin="450,255,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label Content="Valor :" HorizontalAlignment="Left" Margin="450,295,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBox HorizontalAlignment="Left" Height="29" Margin="640,135,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" />
+                    <TextBox HorizontalAlignment="Left" Height="29" Margin="640,175,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" />
+                    <TextBox HorizontalAlignment="Left" Height="29" Margin="640,215,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" />
+                    <TextBox HorizontalAlignment="Left" Height="29" Margin="640,255,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" />
+                    <TextBox HorizontalAlignment="Left" Height="29" Margin="640,295,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" />
+                    <Button Content="Crear" HorizontalAlignment="Left" Margin="535,25,0,0" VerticalAlignment="Top" Width="100" Height="30" Background="#001f32" Foreground="White" BorderBrush="White"/>
+                    <Button Content="Actualizar" HorizontalAlignment="Left" Margin="735,25,0,0" VerticalAlignment="Top" Width="100" Height="30" Background="#001f32" Foreground="White" BorderBrush="White"/>
+                    <Button Content="Eliminar" HorizontalAlignment="Left" Margin="935,25,0,0" VerticalAlignment="Top" Width="100" Height="30" Background="#001f32" Foreground="White" BorderBrush="White"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="855,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontSize="20"><Run Text="Edificio"/><Run Text=" foto"/><Run Text=" :"/></TextBlock>
+                    <DockPanel HorizontalAlignment="Left" Height="140" LastChildFill="False" Margin="855,295,0,0" VerticalAlignment="Top" Width="180" Background="#E0E0E0">
+                        <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
+                            <Button Name="Examinar2" Click="ExaminarFoto" Content="Examinar" BorderBrush="White" Background="#001f32"></Button>
+                        </WrapPanel>
+                        <ListBox Name="ListBox2" Width="180" Foreground="#DD000000" />
+                    </DockPanel>
+                    <TextBlock HorizontalAlignment="Left" Margin="855,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontSize="20"><Run Text="Departamento"/><Run Text=" foto"/><Run Text="s"/><Run Text=" :"/></TextBlock>
+                    <DockPanel HorizontalAlignment="Left" Height="109" LastChildFill="False" Margin="855,135,0,0" VerticalAlignment="Top" Width="180" Background="#E0E0E0">
+                        <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
+                            <Button Name="btnOpenFile" Click="ExaminarFotoEdi" Content="Examinar" Background="#001f32" BorderBrush="White"></Button>
+                        </WrapPanel>
+                        <TextBlock Name="LabelBox1" Width="180" Height="40"/>
+                    </DockPanel>
+                </Grid>
             </Grid>
-            <Grid x:Name="GridArri" Height="460" Background="BlueViolet" Visibility="Collapsed">
+            <Grid x:Name="GridArri" Height="460" Background="#429696" Visibility="Collapsed">
 
             </Grid>
             <Grid x:Name="GridAdmin" Height="460" Background="Orange" Visibility="Collapsed">
