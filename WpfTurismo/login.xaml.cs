@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfTurismo.Controlador;
 
 namespace WpfTurismo
 {
@@ -22,6 +24,38 @@ namespace WpfTurismo
         public login()
         {
             InitializeComponent();
+        }
+
+        private async void Login_Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow vprincipal = new MainWindow();
+            Usuario usuario = new Usuario();
+            Token token = new Token();
+            string direcip = Conexion.ObtenerIpAdrees();
+
+            usuario.email = txbCorreo.Text;
+            usuario.pass = psbContraseña.Password;
+            usuario.device_name = Environment.MachineName;
+            usuario.ip_adress = direcip;
+
+            token.token = Conexion.MandarCredenciales(usuario);
+
+            if (token.token is string)
+            {
+                if (await Conexion.TipoDeUsuario(token) == "Administrador")
+                {
+                    App.Current.MainWindow.Close();
+                    vprincipal.Show();
+                }
+                else
+                {
+                    MessageBox.Show("No eres administrador para iniciar la sesion");
+                }
+            }
+            else
+            {
+                MessageBox.Show(token.token.StatusDescription);
+            }
         }
     }
 }

@@ -97,7 +97,7 @@ namespace WpfTurismo
                     GridFina.Visibility = Visibility.Collapsed;
                     break;
                 case 4:
-                    GridCursor.Background = Brushes.AliceBlue;
+                    GridCursor.Background = Brushes.DodgerBlue;
                     GridMain.Visibility = Visibility.Collapsed;
                     GridDepa.Visibility = Visibility.Collapsed;
                     GridArri.Visibility = Visibility.Collapsed;
@@ -110,7 +110,7 @@ namespace WpfTurismo
 
         private void Button_Click_Cerrar(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Application.Current.Shutdown();
         }
         OpenFileDialog openFileDialog1 = new OpenFileDialog();
         private void ExaminarFoto(object sender, RoutedEventArgs e)
@@ -126,23 +126,51 @@ namespace WpfTurismo
                 if (openFileDialog1.ShowDialog() == true)
                 {
                     foreach (string filename in openFileDialog1.FileNames)
-                        ListBox2.Items.Add(filename);
+                        ListBox1.Items.Add(filename);
                 }
 
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-
+                Console.WriteLine("Error");
+            }
+        }
+        private void ListBox1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ListBox1.SelectedItem != null)
+            {
+                try
+                {
+                    while (ListBox1.SelectedItems.Count > 0)
+                    {
+                        ListBox1.Items.Remove(ListBox1.SelectedItems[0]);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("El archivo no pudo ser eliminado");
+                }
+              
             }
         }
 
         private void ExaminarFotoEdi(object sender, RoutedEventArgs e)
         {
-
             if (openFileDialog1.ShowDialog() == true)
             {
                 LabelBox1.Text = openFileDialog1.FileName;
             }
+        }
+
+        private void EliminarDep_Click(object sender, RoutedEventArgs e)
+        {
+
+            
+        }
+
+        private void DataGrid1_Loaded(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
