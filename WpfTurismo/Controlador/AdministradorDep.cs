@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace WpfTurismo.Controlador
 {
-    public  class Token
+    class AdministradorDep
     {
-        public  dynamic token { get; set; }
+        public string arrendatario { get; set; }
+
+        public string departamento { get; set; }
     }
-
-
 }

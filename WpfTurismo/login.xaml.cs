@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,16 +22,18 @@ namespace WpfTurismo
     /// </summary>
     public partial class login : Window
     {
+        public static Token token { get; set; }
         public login()
         {
             InitializeComponent();
         }
 
-        private async void Login_Button_Click(object sender, RoutedEventArgs e)
+        public async void Login_Button_Click(object sender, RoutedEventArgs e)
         {
+            token = new Token();
             MainWindow vprincipal = new MainWindow();
             Usuario usuario = new Usuario();
-            Token token = new Token();
+            
             string direcip = Conexion.ObtenerIpAdrees();
 
             usuario.email = txbCorreo.Text;

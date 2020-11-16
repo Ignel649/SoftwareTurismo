@@ -11,11 +11,13 @@ using WpfTurismo.Controlador;
 using System.Collections.Specialized;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace WpfTurismo
 {
     public class Conexion
     {
+        //Metodo para obtener la direccion ip para el registro
         public static string ObtenerIpAdrees()
         {
             string resu = "";
@@ -29,6 +31,7 @@ namespace WpfTurismo
 
             return resu;
         }
+        //Metodo para mandar la infomacion de inicio de sesion para validar y la creacion del token por parte de la api
         public static dynamic MandarCredenciales(Usuario usuario)
         {
             try
@@ -42,7 +45,7 @@ namespace WpfTurismo
                 var xd = new WebClient().UploadValues("http://localhost:5000/api/user/login", "POST", values);
                 var responseString = Encoding.Default.GetString(xd);
 
-                Console.WriteLine(responseString);
+                //Console.WriteLine(responseString);
 
                 return responseString;
             }
@@ -56,6 +59,7 @@ namespace WpfTurismo
             }
 
         }
+        //Metodo para traer el tipo de usuario de para validar en el inicio de sesion
         public static async Task<string> TipoDeUsuario(Token token)
         {
             HttpClient cliente = new HttpClient();
@@ -72,7 +76,7 @@ namespace WpfTurismo
             xd.EnsureSuccessStatusCode();
             var resp = await xd.Content.ReadAsStringAsync();
 
-            Console.WriteLine(resp);
+            //Console.WriteLine(resp);
             string resul = "";
             
 
@@ -80,6 +84,124 @@ namespace WpfTurismo
 
             resul = D.TipoUsuario;
             return resul;
+        }
+
+        public static string AgregarUsu(AgregaUsuario usu)
+        {
+            string url = "http://localhost:5000/api/user/register";
+
+            string json = JsonConvert.SerializeObject(usu);
+
+            WebClient conect = new WebClient();
+            conect.Headers[HttpRequestHeader.ContentType] = "application/json";
+            string HtmlResult = conect.UploadString(url, "POST", json);
+
+
+
+            return HtmlResult;
+        }
+
+        //Metodo para crear el edificio mandando el json con los datos correspondientes capturadon en pantalla 
+        public static string CrearEdi(string token , Edificio edi)
+        {
+            
+
+            string url = "http://localhost:5000/api/edificio/create ";
+                //var resp = await xd.Content.ReadAsStringAsync();
+
+            string json = JsonConvert.SerializeObject(edi);
+
+            //var conec = new WebClient().Headers.Set("Content-Type", "application/x-www-form-urlencoded").UploadString(url, "POST", json);
+            WebClient conect = new WebClient();
+            conect.Headers[HttpRequestHeader.Authorization] = "Bearer " + token;
+            conect.Headers[HttpRequestHeader.ContentType] = "application/json";
+            string HtmlResult = conect.UploadString(url, "POST", json);
+
+            //Console.WriteLine(HtmlResult);
+
+            return HtmlResult;
+        }
+        // Actualizar Edificio 
+        public static string ActualizarEdi(string token,Edificio edi,int ide)
+        {
+            string url = "http://localhost:5000/api/edificio/"+ide+"/update";
+
+            string json = JsonConvert.SerializeObject(edi);
+
+            WebClient conect = new WebClient();
+            conect.Headers[HttpRequestHeader.Authorization] = "Bearer " + token;
+            conect.Headers[HttpRequestHeader.ContentType] = "application/json";
+            string HtmlResult = conect.UploadString(url, "PUT", json);
+
+            Console.WriteLine(json);
+            return HtmlResult;
+        }
+        // Eliminar edificio
+        public static string EliminarEdi(string token, int ide)
+        {
+            string url = "http://localhost:5000/api/edificio/" + ide + "/delete";
+
+            WebClient conect = new WebClient();
+            conect.Headers[HttpRequestHeader.Authorization] = "Bearer " + token;
+            conect.Headers[HttpRequestHeader.ContentType] = "application/json";
+            string HtmlResult = conect.UploadString(url, "DELETE","");
+
+            return HtmlResult;
+        }
+        // Agredar departamento al registro 
+        public static string CrearDepa(string token , Departamento depa)
+        {
+            string url = "http://localhost:5000/api/departamento/create";
+
+            string json = JsonConvert.SerializeObject(depa);
+
+            WebClient conect = new WebClient();
+            conect.Headers[HttpRequestHeader.Authorization] = "Bearer " + token;
+            conect.Headers[HttpRequestHeader.ContentType] = "application/json";
+            string HtmlResult = conect.UploadString(url, "POST", json);
+
+            Console.WriteLine(HtmlResult);
+
+            return HtmlResult;
+
+        }
+        // Actualizar Departamento
+        public static string ActualizarDepa(string token, Departamento depa, int ide)
+        {
+            string url = "http://localhost:5000/api/departamento/" + ide + "/update";
+
+            string json = JsonConvert.SerializeObject(depa);
+
+            WebClient conect = new WebClient();
+            conect.Headers[HttpRequestHeader.Authorization] = "Bearer " + token;
+            conect.Headers[HttpRequestHeader.ContentType] = "application/json";
+            string HtmlResult = conect.UploadString(url, "PUT", json);
+
+            
+            return HtmlResult;
+        }
+        //Eliminar Departamento con id del mismo
+        public static string EliminarDepa(string token,int ide)
+        {
+            string url = "http://localhost:5000/api/departamento/" + ide + "/delete";
+
+            WebClient conect = new WebClient();
+            conect.Headers[HttpRequestHeader.Authorization] = "Bearer " + token;
+            conect.Headers[HttpRequestHeader.ContentType] = "application/json";
+            string HtmlResult = conect.UploadString(url, "DELETE", "");
+
+            return HtmlResult;
+        }
+
+
+        public static void prueba(Edificio xd)
+        {
+           
+
+            string jsons = JsonConvert.SerializeObject(xd);
+
+            Console.WriteLine(jsons);
+
         }
     }
 }

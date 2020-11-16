@@ -16,7 +16,9 @@ using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Helpers;
 using LiveCharts.Wpf;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
+using WpfTurismo.Controlador;
 
 namespace WpfTurismo
 {
@@ -25,6 +27,7 @@ namespace WpfTurismo
     /// </summary>
     public partial class MainWindow : Window
     {
+       // Grafico de la visual dash
         public MainWindow()
         {
             InitializeComponent();
@@ -56,6 +59,7 @@ namespace WpfTurismo
         public string[] Labels { get; set; }
         public Func<double, string> Formatter { get; set; }
 
+        //Navegar por las diferentes pantallas de la aplicacion
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             int index = int.Parse(((Button)e.Source).Uid);
@@ -71,6 +75,7 @@ namespace WpfTurismo
                     GridArri.Visibility = Visibility.Collapsed;
                     GridAdmin.Visibility = Visibility.Collapsed;
                     GridFina.Visibility = Visibility.Collapsed;
+                    GridUsuarios.Visibility = Visibility.Collapsed;
                     break;
                 case 1:
                     GridCursor.Background = Brushes.YellowGreen;
@@ -79,6 +84,7 @@ namespace WpfTurismo
                     GridArri.Visibility = Visibility.Collapsed;
                     GridAdmin.Visibility = Visibility.Collapsed;
                     GridFina.Visibility = Visibility.Collapsed;
+                    GridUsuarios.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
                     GridCursor.Background = Brushes.MistyRose;
@@ -87,6 +93,7 @@ namespace WpfTurismo
                     GridArri.Visibility = Visibility.Visible;
                     GridAdmin.Visibility = Visibility.Collapsed;
                     GridFina.Visibility = Visibility.Collapsed;
+                    GridUsuarios.Visibility = Visibility.Collapsed;
                     break;
                 case 3:
                     GridCursor.Background = Brushes.Orange;
@@ -95,6 +102,7 @@ namespace WpfTurismo
                     GridArri.Visibility = Visibility.Collapsed;
                     GridAdmin.Visibility = Visibility.Visible;
                     GridFina.Visibility = Visibility.Collapsed;
+                    GridUsuarios.Visibility = Visibility.Collapsed;
                     break;
                 case 4:
                     GridCursor.Background = Brushes.DodgerBlue;
@@ -103,16 +111,19 @@ namespace WpfTurismo
                     GridArri.Visibility = Visibility.Collapsed;
                     GridAdmin.Visibility = Visibility.Collapsed;
                     GridFina.Visibility = Visibility.Visible;
+                    GridUsuarios.Visibility = Visibility.Collapsed;
                     break;
             }
 
         }
-
+        //Cerrrar Aplicacion
         private void Button_Click_Cerrar(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
         OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+        //Buscar fotografia en la computadora local
         private void ExaminarFoto(object sender, RoutedEventArgs e)
         {
             try
@@ -126,7 +137,7 @@ namespace WpfTurismo
                 if (openFileDialog1.ShowDialog() == true)
                 {
                     foreach (string filename in openFileDialog1.FileNames)
-                        ListBox1.Items.Add(filename);
+                        ListBoxDepa.Items.Add(filename);
                 }
 
             }
@@ -135,15 +146,16 @@ namespace WpfTurismo
                 Console.WriteLine("Error");
             }
         }
+        //Eliminar Fotos de Edificio en su lista
         private void ListBox1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (ListBox1.SelectedItem != null)
+            if (ListBoxDepa.SelectedItem != null)
             {
                 try
                 {
-                    while (ListBox1.SelectedItems.Count > 0)
+                    while (ListBoxDepa.SelectedItems.Count > 0)
                     {
-                        ListBox1.Items.Remove(ListBox1.SelectedItems[0]);
+                        ListBoxDepa.Items.Remove(ListBoxDepa.SelectedItems[0]);
                     }
                 }
                 catch(Exception ex)
@@ -153,24 +165,175 @@ namespace WpfTurismo
               
             }
         }
-
+        // Buscar Fotografias de edificio
         private void ExaminarFotoEdi(object sender, RoutedEventArgs e)
         {
             if (openFileDialog1.ShowDialog() == true)
             {
-                LabelBox1.Text = openFileDialog1.FileName;
+                FotoEdi.Text = openFileDialog1.FileName;
             }
         }
 
-        private void EliminarDep_Click(object sender, RoutedEventArgs e)
+        private void btn_buscarEdi(object sender, RoutedEventArgs e)
         {
 
+
+
+
+        }
+        // Crear edificio 
+        private void CreateEdi(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Edificio edi = new Edificio();
+
+                edi.nombre = NombreEdi.Text;
+                edi.direccion_edificio = DireccionEdi.Text;
+                edi.telefono = int.Parse(TelefonoEdi.Text);
+                edi.foto = FotoEdi.Text;
+                edi.fk_id_comuna = 1;    //ComunaEdi.SelectedIndex;
+
+                var tokenisado = login.token.token;
+
+               MessageBox.Show(Conexion.CrearEdi(tokenisado, edi));
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+          
+        }
+        //Actualizar atribustos del edificio
+        private void btn_ActualizarEdi(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Edificio ed = new Edificio();
+
+                ed.nombre = NombreEdi.Text;
+                ed.direccion_edificio = DireccionEdi.Text;
+                ed.telefono = int.Parse(TelefonoEdi.Text);
+                ed.foto = FotoEdi.Text;
+                ed.fk_id_comuna = 1;
+
+                var tokenisado = login.token.token;
+
+                Console.WriteLine(Conexion.ActualizarEdi(tokenisado,ed, 1));
+            }catch(Exception ex)
+            {
+                MessageBox.Show("Error : Verificar los datos");
+            }
+        }
+        // Agregar un departamento al sistema 
+        private void CrearDepa(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Departamento depa = new Departamento();
+
+
+                string fotosDepa = string.Join(" ", ListBoxDepa.Items.Cast<String>().ToList());
+
+
+                depa.numero_habitacion = int.Parse(HabitacionDepa.Text);
+                depa.numero_habitaciones = int.Parse(HabitacionesDepa.Text);
+                depa.metros_cuadrados = int.Parse(MetrosDepa.Text);
+                depa.banios = int.Parse(BaniosDepa.Text);
+                depa.piso = int.Parse(PisoDepa.Text);
+                depa.precio_noche = int.Parse(ValorDepa.Text);
+                depa.foto = fotosDepa;
+                depa.fk_id_edificio = 1; //EdificioDepa.SelectedIndex;
+                depa.fk_id_estado = 1;    //EstadoDepa.SelectedIndex;
+
+                var tokenisado = login.token.token;
+
+                MessageBox.Show(Conexion.CrearDepa(tokenisado, depa));
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error : Departamento no creado , Verificar los datos");
+            }
             
         }
+        // Actualizar Departamento 
+        private void btn_ActualizarDepa(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Departamento dep = new Departamento();
+
+                string fotosDepa = string.Join(" ", ListBoxDepa.Items.Cast<String>().ToList());
+
+
+                dep.numero_habitacion = int.Parse(HabitacionDepa.Text);
+                dep.numero_habitaciones = int.Parse(HabitacionesDepa.Text);
+                dep.metros_cuadrados = int.Parse(MetrosDepa.Text);
+                dep.banios = int.Parse(BaniosDepa.Text);
+                dep.piso = int.Parse(PisoDepa.Text);
+                dep.precio_noche = int.Parse(ValorDepa.Text);
+                dep.foto = fotosDepa;
+                dep.fk_id_edificio = 1; //EdificioDepa.SelectedIndex;
+                dep.fk_id_estado = 1;    //EstadoDepa.SelectedIndex;
+                
+                var tokenisado = login.token.token;
+
+                MessageBox.Show(Conexion.ActualizarDepa(tokenisado, dep,1));
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error : Verificar los datos");
+            }
+            
+
+        }
+        // Eliminar departamento 
+        private void EliminarDep_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int ide = int.Parse(buscarDepa.Text);
+
+                var tokenisado = login.token.token;
+
+                MessageBox.Show(Conexion.EliminarDepa(tokenisado, ide));
+            }catch(Exception ex)
+            {
+                MessageBox.Show("Error : El departamento no se elimino "+ex);
+            }
+
+
+        }
+
+        //Agregar un nuevo usuario administrador o funcionario al sistema
+        private void btn_agregarUsuario(object sender, RoutedEventArgs e)
+        {
+            AgregaUsuario usu = new AgregaUsuario();
+            try
+            {
+                usu.nombre = NombreUsu.Text;
+                usu.contrasenia = ContraUsu.Text;
+                usu.email = CorreoUsu.Text;
+                usu.foto = "1";
+                usu.rut = RutUsu.Text;
+                usu.direccion = DirecUsu.Text;
+                usu.telefono = TelefonoUsu.Text;
+                usu.fk_id_tipo_usu = 2;
+
+                MessageBox.Show(Conexion.AgregarUsu(usu));
+            }catch(Exception ex)
+            {
+                MessageBox.Show("El usuario ya esta registrado o los datos estan mal ingresados");
+            }
+
+        }
+
+ 
 
         private void DataGrid1_Loaded(object sender, RoutedEventArgs e)
         {
-            
+           
         }
+
+
     }
 }
