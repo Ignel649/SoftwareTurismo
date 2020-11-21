@@ -90,10 +90,16 @@
     <Compile Include="Conexion\Conexion.cs" />
     <Compile Include="Controlador\AdministradorDep.cs" />
     <Compile Include="Controlador\AgregaUsuario.cs" />
+    <Compile Include="Controlador\Combobox.cs" />
+    <Compile Include="Controlador\Comuna.cs" />
+    <Compile Include="Controlador\DataCombo.cs" />
     <Compile Include="Controlador\DatosUsuario.cs" />
     <Compile Include="Controlador\Departamento.cs" />
     <Compile Include="Controlador\Edificio.cs" />
     <Compile Include="Controlador\ipe.cs" />
+    <Compile Include="Controlador\ObtenerDepartamento.cs" />
+    <Compile Include="Controlador\ObtenerEdificio.cs" />
+    <Compile Include="Controlador\Region.cs" />
     <Compile Include="Controlador\Token.cs" />
     <Compile Include="Controlador\Usuario.cs" />
     <Compile Include="login.xaml.cs">

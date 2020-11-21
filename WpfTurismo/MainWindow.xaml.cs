@@ -19,6 +19,7 @@ using LiveCharts.Wpf;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using WpfTurismo.Controlador;
+using System.Collections.ObjectModel;
 
 namespace WpfTurismo
 {
@@ -27,11 +28,14 @@ namespace WpfTurismo
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Combobox _objViewModel;
        // Grafico de la visual dash
         public MainWindow()
         {
+            
             InitializeComponent();
-
+            cargar();
+            
             SeriesCollection = new SeriesCollection
             {
                 new ColumnSeries
@@ -48,12 +52,71 @@ namespace WpfTurismo
 
             //also adding values updates and animates the chart automatically
             SeriesCollection[1].Values.Add(48d);
-
+            
             Labels = new[] { "Enero", "Febrero", "Marzo", "Abril" };
             Formatter = value => value.ToString("N");
 
             DataContext = this;
+            
+            //-----combobox tipo de usuario
+            cbx_tipo_usu.Items.Add("Administrador");
+            cbx_tipo_usu.Items.Add("Funcionario");
+            //-------combobox estado departamento
+            cbx_EstadoDepa.Items.Add("Disponible");
+            cbx_EstadoDepa.Items.Add("Ocupado");
+            cbx_EstadoDepa.Items.Add("Mantenimiento");
+            cbx_EstadoDepa.Items.Add("Reservado");
+            cbx_EstadoDepa.Items.Add("Reparacion");
+            //-------Combobox Edificios
+            List<ObtenerEdificio> edif = Conexion.ObtenerEdificio();
+            
+            
+            foreach (ObtenerEdificio edi in edif)
+            {
+                cbx_EdificioDepa.Items.Add(new { Text = edi.nombre, Value = edi.id });
+            }
+            //--------Combobox Region
+
+
+
+            /*foreach (Region x in regiones)
+            {
+                cbx_RegionEdi.Items.Add(new { Text = x.nombre_region, Value = x.id });
+            }*/
+            //Combobox Comuna
+
+
+            cbx_RegionEdi.ItemsSource = _objViewModel.SingleRegionList;
+           
+
+
+            //cbx_RegionEdi.ItemsSource = comu;
+
+            // cbx_RegionEdi.SelectionChanged += Cbx_ComunaEdi_SelectionChanged;
         }
+        public void cargar()
+        {
+            _objViewModel = new Combobox();
+            SourceContext();
+            InitialOperations();
+        }
+
+        public void SourceContext()
+        {
+            this.DataContext = _objViewModel;
+        }
+
+        public void InitialOperations()
+        {
+            PopulateRegionCombo();
+
+        }
+        public void PopulateRegionCombo()
+        {
+
+            _objViewModel.cargarRegion();
+        }
+
 
         public SeriesCollection SeriesCollection { get; set; }
         public string[] Labels { get; set; }
@@ -116,6 +179,15 @@ namespace WpfTurismo
             }
 
         }
+        private void btnUsuarios_Click(object sender, RoutedEventArgs e)
+        {
+            GridMain.Visibility = Visibility.Collapsed;
+            GridDepa.Visibility = Visibility.Collapsed;
+            GridArri.Visibility = Visibility.Collapsed;
+            GridAdmin.Visibility = Visibility.Collapsed;
+            GridFina.Visibility = Visibility.Collapsed;
+            GridUsuarios.Visibility = Visibility.Visible;
+        }
         //Cerrrar Aplicacion
         private void Button_Click_Cerrar(object sender, RoutedEventArgs e)
         {
@@ -173,12 +245,25 @@ namespace WpfTurismo
                 FotoEdi.Text = openFileDialog1.FileName;
             }
         }
-
+        // Buscar edificio por nombre
         private void btn_buscarEdi(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                string edi = buscarEdi.Text;
 
+                var tokenisado = login.token.token;
+                List<ObtenerEdificio> obed = Conexion.BuscarEdificio(tokenisado, edi);
 
-
+                NombreEdi.Text = obed[0].nombre;
+                DireccionEdi.Text = obed[0].direccion;
+                TelefonoEdi.Text = obed[0].telefono.ToString();
+                cbx_ComunaEdi.SelectedItem = obed[0].comuna; // no funciona
+            }catch(Exception ex)
+            {
+                MessageBox.Show("Error : " + ex);
+            }
+           
 
         }
         // Crear edificio 
@@ -192,7 +277,7 @@ namespace WpfTurismo
                 edi.direccion_edificio = DireccionEdi.Text;
                 edi.telefono = int.Parse(TelefonoEdi.Text);
                 edi.foto = FotoEdi.Text;
-                edi.fk_id_comuna = 1;    //ComunaEdi.SelectedIndex;
+                edi.fk_id_comuna = (int)cbx_ComunaEdi.SelectedValue;    //ComunaEdi.SelectedIndex;
 
                 var tokenisado = login.token.token;
 
@@ -214,15 +299,61 @@ namespace WpfTurismo
                 ed.direccion_edificio = DireccionEdi.Text;
                 ed.telefono = int.Parse(TelefonoEdi.Text);
                 ed.foto = FotoEdi.Text;
-                ed.fk_id_comuna = 1;
+                ed.fk_id_comuna = (int)cbx_ComunaEdi.SelectedValue;
 
                 var tokenisado = login.token.token;
 
-                Console.WriteLine(Conexion.ActualizarEdi(tokenisado,ed, 1));
+                MessageBox.Show(Conexion.ActualizarEdi(tokenisado,ed, 1));
             }catch(Exception ex)
             {
-                MessageBox.Show("Error : Verificar los datos");
+                MessageBox.Show("Error : Verificar los datos "+ex);
             }
+        }
+        // Eliminar edificio 
+        private void EliminarEdi(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int ide = int.Parse(buscarEdi.Text);
+
+                var tokenisado = login.token.token;
+
+                MessageBox.Show(Conexion.EliminarEdi(tokenisado, ide));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error : El departamento no se elimino " + ex);
+            }
+        }
+        // Buscar departamento por nombre edicio y numero
+        private void btn_BuscarDepa(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string edi = buscarDepa.Text;
+                int num = int.Parse(NumeroDepart.Text);
+
+                var tokenisado = login.token.token;
+                List<ObtenerDepartamento> op = Conexion.BuscarDepa(tokenisado, edi, num);
+
+                HabitacionDepa.Text = op[0].num_habitacion.ToString();
+                HabitacionesDepa.Text = op[0].num_habitaciones.ToString();
+                MetrosDepa.Text = op[0].metros_cuadrados.ToString();
+                BaniosDepa.Text = op[0].banios.ToString();
+                PisoDepa.Text = op[0].piso.ToString();
+                ValorDepa.Text = op[0].precio_noche.ToString();
+                cbx_EdificioDepa.SelectedValue = op[0].id;
+                cbx_EstadoDepa.SelectedItem = op[0].estado;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error : " + ex);
+            }
+          
+
+
+
+
         }
         // Agregar un departamento al sistema 
         private void CrearDepa(object sender, RoutedEventArgs e)
@@ -242,8 +373,8 @@ namespace WpfTurismo
                 depa.piso = int.Parse(PisoDepa.Text);
                 depa.precio_noche = int.Parse(ValorDepa.Text);
                 depa.foto = fotosDepa;
-                depa.fk_id_edificio = 1; //EdificioDepa.SelectedIndex;
-                depa.fk_id_estado = 1;    //EstadoDepa.SelectedIndex;
+                depa.fk_id_edificio = (int)cbx_EdificioDepa.SelectedValue;
+                depa.fk_id_estado = cbx_EstadoDepa.SelectedIndex+1;    //EstadoDepa.SelectedIndex;
 
                 var tokenisado = login.token.token;
 
@@ -252,6 +383,7 @@ namespace WpfTurismo
             catch(Exception ex)
             {
                 MessageBox.Show("Error : Departamento no creado , Verificar los datos");
+                Conexion.ObtenerEdificio();
             }
             
         }
@@ -272,9 +404,9 @@ namespace WpfTurismo
                 dep.piso = int.Parse(PisoDepa.Text);
                 dep.precio_noche = int.Parse(ValorDepa.Text);
                 dep.foto = fotosDepa;
-                dep.fk_id_edificio = 1; //EdificioDepa.SelectedIndex;
-                dep.fk_id_estado = 1;    //EstadoDepa.SelectedIndex;
-                
+                dep.fk_id_edificio = (int)cbx_EdificioDepa.SelectedValue; //EdificioDepa.SelectedIndex;
+                dep.fk_id_estado = cbx_EstadoDepa.SelectedIndex + 1;    //EstadoDepa.SelectedIndex;
+
                 var tokenisado = login.token.token;
 
                 MessageBox.Show(Conexion.ActualizarDepa(tokenisado, dep,1));
@@ -311,18 +443,18 @@ namespace WpfTurismo
             try
             {
                 usu.nombre = NombreUsu.Text;
-                usu.contrasenia = ContraUsu.Text;
+                usu.contrasenia = ContraUsu.Password;
                 usu.email = CorreoUsu.Text;
                 usu.foto = "1";
                 usu.rut = RutUsu.Text;
                 usu.direccion = DirecUsu.Text;
                 usu.telefono = TelefonoUsu.Text;
-                usu.fk_id_tipo_usu = 2;
+                usu.fk_id_tipo_usu = cbx_tipo_usu.SelectedIndex+2;
 
                 MessageBox.Show(Conexion.AgregarUsu(usu));
             }catch(Exception ex)
             {
-                MessageBox.Show("El usuario ya esta registrado o los datos estan mal ingresados");
+                MessageBox.Show("El usuario ya esta registrado o los datos estan mal ingresados"+ex);
             }
 
         }
@@ -333,7 +465,93 @@ namespace WpfTurismo
         {
            
         }
+        //-----------------------------------------------------------------------VALIDACIONES DE CAMPOS NUMERICOS----------------------------------------------------------------------------
+        private void TelefonoUsu_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                e.Handled = false;
+            else
+                e.Handled = true;
+        }
 
+        private void HabitacionDepa_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                e.Handled = false;
+            else
+                e.Handled = true;
+        }
+
+        private void HabitacionesDepa_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                e.Handled = false;
+            else
+                e.Handled = true;
+        }
+
+        private void MetrosDepa_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                e.Handled = false;
+            else
+                e.Handled = true;
+        }
+
+        private void BaniosDepa_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                e.Handled = false;
+            else
+                e.Handled = true;
+        }
+
+        private void PisoDepa_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                e.Handled = false;
+            else
+                e.Handled = true;
+        }
+
+        private void ValorDepa_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                e.Handled = false;
+            else
+                e.Handled = true;
+        }
+
+        private void TelefonoEdi_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                e.Handled = false;
+            else
+                e.Handled = true;
+        }
+        // Comunas Segun region
+        private void cbx_RegionEdi_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //_objViewModel.cargarComuna(cbx_RegionEdi.SelectedValue.ToString());
+            string id_region = cbx_RegionEdi.SelectedValue.ToString();
+            int id_fix = int.Parse(id_region);
+
+            List<Comuna> comu = Conexion.ObtenerComunas();
+
+            IEnumerable<Comuna> filtrado = new Comuna[] { };
+            cbx_ComunaEdi.Items.Clear();
+            filtrado = comu.Where(items => items.region == id_fix);
+
+            
+
+            foreach (Comuna x in filtrado)
+            {
+                cbx_ComunaEdi.Items.Add(new { Text = x.nombre_comuna, Value = x.id });
+            }
+
+            
+
+        }
 
     }
 }

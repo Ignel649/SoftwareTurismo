@@ -100,6 +100,8 @@ namespace WpfTurismo
 
             return HtmlResult;
         }
+        //Metodo para buscar edificio y guardar los datos en un objeto
+
 
         //Metodo para crear el edificio mandando el json con los datos correspondientes capturadon en pantalla 
         public static string CrearEdi(string token , Edificio edi)
@@ -192,7 +194,72 @@ namespace WpfTurismo
 
             return HtmlResult;
         }
+        //Obtener Nombre de edificio
+        public static List<ObtenerEdificio> ObtenerEdificio()
+        {
+            string url = "http://localhost:5000/api/edificios";
+            WebClient conect = new WebClient();
+ 
+            string HtmlResult = conect.DownloadString(url);
 
+            List<ObtenerEdificio> a = JsonConvert.DeserializeObject<List<ObtenerEdificio>>(HtmlResult);
+
+            /* foreach(ObtenerEdificio edi in a)
+             {
+                 Console.WriteLine(edi.nombre);
+             }*/
+            return a;
+        }
+        //Buscar Edificios por nombre
+        public static List<ObtenerEdificio> BuscarEdificio(string token , string ediNombre)
+        {
+            string url = "http://localhost:5000/api/edificioByName/"+ediNombre;
+
+            WebClient conect = new WebClient();
+            conect.Headers[HttpRequestHeader.Authorization] = "Bearer " + token;
+            string json = conect.DownloadString(url);
+
+            List<ObtenerEdificio> xd = JsonConvert.DeserializeObject<List<ObtenerEdificio>>(json);
+
+            return xd;
+        }
+        //buscar departamentos por nombre edificio y numero
+        public static List<ObtenerDepartamento> BuscarDepa(string token ,string ediNombre,int depaNumero)
+        {
+            string url = "http://localhost:5000/api/depanumeroedificio/"+depaNumero+"/" + ediNombre;
+
+            WebClient conect = new WebClient();
+            conect.Headers[HttpRequestHeader.Authorization] = "Bearer " + token;
+            string json = conect.DownloadString(url);
+
+            List<ObtenerDepartamento> xd = JsonConvert.DeserializeObject<List<ObtenerDepartamento>>(json);
+
+            return xd;
+        }
+        //Obtener las regiones
+        public static List<Region> ObtenerRegion()
+        {
+            string url = "http://localhost:5000/api/combo/region";
+            WebClient conect = new WebClient();
+
+            string json = conect.DownloadString(url);
+
+            List<Region> a = JsonConvert.DeserializeObject<List<Region>>(json);
+
+            return a;
+        }
+        //Obtener Comunas
+        public static List<Comuna> ObtenerComunas()
+        {
+            string url = "http://localhost:5000/api/combo/comuna";
+            WebClient conect = new WebClient();
+
+            string json = conect.DownloadString(url);
+
+            List<Comuna> a = JsonConvert.DeserializeObject<List<Comuna>>(json);
+
+            return a;
+        }
 
         public static void prueba(Edificio xd)
         {

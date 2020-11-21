@@ -6,6 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:WpfTurismo"
+      
         mc:Ignorable="d" Height="600" Width="1080" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" d:DataContext="{d:DesignInstance local:MainWindow}">
     <StackPanel Background="WhiteSmoke">
         <Grid Height="40">
@@ -16,7 +17,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0">
                 <Button Content="Contacto" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Gray" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Button>
-                <Button x:Name="btnUsuarios" Content="Usuarios" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Gray" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Button>
+                <Button x:Name="btnUsuarios" Content="Usuarios" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Gray" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" Click="btnUsuarios_Click"></Button>
                 <Button Background="{x:Null}" BorderBrush="{x:Null}"  VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Click="Button_Click_Cerrar">
                     <materialDesign:PackIcon Kind="Power" Foreground="Red" Height="25" Width="25"></materialDesign:PackIcon>
                 </Button>
@@ -38,9 +39,9 @@
                 <Image Source="Imagenes\Logo_turismo_real.png" Margin="10,10,752,246"/>
                 <Image Source="Imagenes\model_travel.png" Margin="451,0,10,0"/>
             </Grid>
-            <Grid x:Name="GridDepa" Height="460" Background="#EC5259" Visibility="Collapsed">
+            <Grid x:Name="GridDepa" Height="460" Background="#EC5259" Visibility="Visible">
                 <Grid Height="460" Width="1080" HorizontalAlignment="Left">
-                    <TextBox HorizontalAlignment="Left" Height="30" Margin="50,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Background="White" BorderBrush="#001f32" Foreground="#001f32"/>
+                    <TextBox x:Name="buscarEdi" HorizontalAlignment="Left" Height="30" Margin="50,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Background="White" BorderBrush="#001f32" Foreground="#001f32"/>
                     <Button Content="Buscar" HorizontalAlignment="Left" Margin="355,25,0,0" VerticalAlignment="Top" Width="75" Height="30" Background="#001f32" Foreground="White" BorderBrush="White" Click="btn_buscarEdi"/>
                     <TextBlock HorizontalAlignment="Left" Margin="50,90,0,0" TextWrapping="Wrap" Text="Edificio :" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
                     <Label Content="Nombre :" HorizontalAlignment="Left" Margin="50,135,0,0" VerticalAlignment="Top" FontSize="16"/>
@@ -50,12 +51,12 @@
                     <Label Content="Comuna :" HorizontalAlignment="Left" Margin="50,305,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <TextBox x:Name="NombreEdi" HorizontalAlignment="Left" Height="29" Margin="144,135,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" BorderBrush="#001f32" Foreground="White" />
                     <TextBox x:Name="DireccionEdi" HorizontalAlignment="Left" Height="29" Margin="144,175,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" BorderBrush="#001f32" Foreground="White"/>
-                    <TextBox x:Name="TelefonoEdi" HorizontalAlignment="Left" Height="29" Margin="144,215,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="150" BorderBrush="#001f32" Foreground="White"/>
-                    <ComboBox x:Name="RegionEdi" HorizontalAlignment="Left" Margin="144,265,0,0" VerticalAlignment="Top" Width="250" BorderBrush="#001f32" Height="29"/>
-                    <ComboBox x:Name="ComunaEdi" HorizontalAlignment="Left" Margin="144,305,0,0" VerticalAlignment="Top" Width="250" BorderBrush="#001f32" Height="29"/>
+                    <TextBox x:Name="TelefonoEdi" HorizontalAlignment="Left" Height="29" Margin="144,215,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="150" BorderBrush="#001f32" Foreground="White" KeyDown="TelefonoEdi_KeyDown"/>
+                    <ComboBox x:Name="cbx_RegionEdi" HorizontalAlignment="Left" Margin="144,265,0,0" VerticalAlignment="Top" Width="250" BorderBrush="#001f32" Height="29" DisplayMemberPath="nombre_region"  SelectedValuePath="id"  SelectionChanged="cbx_RegionEdi_SelectionChanged" IsSynchronizedWithCurrentItem="True" />
+                    <ComboBox x:Name="cbx_ComunaEdi" HorizontalAlignment="Left" Margin="144,305,0,0" VerticalAlignment="Top" Width="250" BorderBrush="#001f32" Height="29" DisplayMemberPath="Text"  SelectedValuePath="Value"  IsSynchronizedWithCurrentItem="True" />
                     <Button Content="Crear" HorizontalAlignment="Left" Margin="535,25,0,0" VerticalAlignment="Top" Width="100" Height="30" Background="#001f32" Foreground="White" BorderBrush="White" Click="CreateEdi"/>
                     <Button Content="Actualizar" HorizontalAlignment="Left" Margin="735,25,0,0" VerticalAlignment="Top" Width="100" Height="30" Background="#001f32" Foreground="White" BorderBrush="White" Click="btn_ActualizarEdi"/>
-                    <Button Content="Eliminar" HorizontalAlignment="Left" Margin="935,25,0,0" VerticalAlignment="Top" Width="100" Height="30" Background="#001f32" Foreground="White" BorderBrush="White"/>
+                    <Button Content="Eliminar" HorizontalAlignment="Left" Margin="935,25,0,0" VerticalAlignment="Top" Width="100" Height="30" Background="#001f32" Foreground="White" BorderBrush="White" Click="EliminarEdi"/>
                     <TextBlock HorizontalAlignment="Left" Margin="473,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontSize="20"><Run Text="Edificio"/><Run Text=" foto"/><Run Text=" :"/></TextBlock>
                     <DockPanel HorizontalAlignment="Left" Height="95" LastChildFill="False" Margin="473,135,0,0" VerticalAlignment="Top" Width="247" Background="White">
                         <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
@@ -66,21 +67,21 @@
                     <Image Source="Imagenes/hojas.png" Margin="735,90,-3,20"/>
                 </Grid>
             </Grid>
-            <Grid x:Name="GridArri" Height="460" Background="#429696" Visibility="Visible">
+            <Grid x:Name="GridArri" Height="460" Background="#429696" Visibility="Collapsed">
                 <Grid Height="460" Width="1080" HorizontalAlignment="Left">
-                    <TextBox x:Name="buscarDepa" HorizontalAlignment="Left" Height="30" Margin="50,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Background="White" BorderBrush="#001f32" Foreground="#001f32"/>
-                    <Button Content="Buscar" HorizontalAlignment="Left" Margin="355,25,0,0" VerticalAlignment="Top" Width="75" Height="30" Background="#EC5259" Foreground="White" BorderBrush="White"/>
+                    <TextBox x:Name="buscarDepa" HorizontalAlignment="Left" Height="30" Margin="50,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="211" Background="White" BorderBrush="#001f32" Foreground="#001f32"/>
+                    <Button Content="Buscar" HorizontalAlignment="Left" Margin="355,25,0,0" VerticalAlignment="Top" Width="75" Height="30" Background="#EC5259" Foreground="White" BorderBrush="White" Click="btn_BuscarDepa"/>
                     <TextBlock HorizontalAlignment="Left" Margin="51,90,0,0" TextWrapping="Wrap" Text="Departamento :" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
                     <Label Content="N° Habitaciones :" HorizontalAlignment="Left" Margin="50,163,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <Label Content="Metros Cuadrados (m²) :" HorizontalAlignment="Left" Margin="50,203,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <Label Content="Baños :" HorizontalAlignment="Left" Margin="50,243,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <Label Content="Piso :" HorizontalAlignment="Left" Margin="50,283,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <Label Content="Valor :" HorizontalAlignment="Left" Margin="50,323,0,0" VerticalAlignment="Top" FontSize="16"/>
-                    <TextBox x:Name="HabitacionesDepa" HorizontalAlignment="Left" Height="29" Margin="240,163,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" />
-                    <TextBox x:Name="MetrosDepa" HorizontalAlignment="Left" Height="29" Margin="240,203,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" />
-                    <TextBox x:Name="BaniosDepa" HorizontalAlignment="Left" Height="29" Margin="240,243,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" />
-                    <TextBox x:Name="PisoDepa" HorizontalAlignment="Left" Height="29" Margin="240,283,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" />
-                    <TextBox x:Name="ValorDepa" HorizontalAlignment="Left" Height="29" Margin="240,323,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" />
+                    <TextBox x:Name="HabitacionesDepa" HorizontalAlignment="Left" Height="29" Margin="240,163,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" KeyDown="HabitacionesDepa_KeyDown" />
+                    <TextBox x:Name="MetrosDepa" HorizontalAlignment="Left" Height="29" Margin="240,203,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" KeyDown="MetrosDepa_KeyDown" />
+                    <TextBox x:Name="BaniosDepa" HorizontalAlignment="Left" Height="29" Margin="240,243,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" KeyDown="BaniosDepa_KeyDown" />
+                    <TextBox x:Name="PisoDepa" HorizontalAlignment="Left" Height="29" Margin="240,283,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" KeyDown="PisoDepa_KeyDown"/>
+                    <TextBox x:Name="ValorDepa" HorizontalAlignment="Left" Height="29" Margin="240,323,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" KeyDown="ValorDepa_KeyDown" />
                     <Button Content="Crear" HorizontalAlignment="Left" Margin="535,25,0,0" VerticalAlignment="Top" Width="100" Height="30" Background="#EC5259" Foreground="White" BorderBrush="White" Click="CrearDepa"/>
                     <Button Content="Actualizar" HorizontalAlignment="Left" Margin="735,25,0,0" VerticalAlignment="Top" Width="100" Height="30" Background="#EC5259" Foreground="White" BorderBrush="White" Click="btn_ActualizarDepa"/>
                     <Button x:Name="EliminarDep" Content="Eliminar" HorizontalAlignment="Left" Margin="935,25,0,0" VerticalAlignment="Top" Width="100" Height="30" Background="#EC5259" Foreground="White" BorderBrush="White" Click="EliminarDep_Click"/>
@@ -91,12 +92,13 @@
                         <ListBox x:Name="ListBoxDepa" Width="275" Foreground="#DD000000" Margin="0,14,0,0" Background="Transparent" MouseDoubleClick="ListBox1_MouseDoubleClick" />
                     </DockPanel>
                     <TextBlock HorizontalAlignment="Left" Margin="606,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontSize="20"><Run Text="Departamento"/><Run Text=" foto"/><Run Text="s"/><Run Text=" :"/></TextBlock>
-                    <ComboBox x:Name="EdificioDepa" HorizontalAlignment="Left" Height="29" Margin="240,357,0,0"  Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" />
+                    <ComboBox x:Name="cbx_EdificioDepa" HorizontalAlignment="Left" Height="29" Margin="240,357,0,0"  Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" DisplayMemberPath="Text"  SelectedValuePath="Value" />
                     <Label Content="Edificio :" HorizontalAlignment="Left" Margin="50,357,0,0" VerticalAlignment="Top" FontSize="16"/>
-                    <ComboBox x:Name="EstadoDepa" HorizontalAlignment="Left" Height="29" Margin="239,391,0,0"  Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" />
+                    <ComboBox x:Name="cbx_EstadoDepa" HorizontalAlignment="Left" Height="29" Margin="239,391,0,0"  Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" />
                     <Label Content="Estado :" HorizontalAlignment="Left" Margin="49,391,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <Label Content="Habitacion :" HorizontalAlignment="Left" Margin="50,129,0,0" VerticalAlignment="Top" FontSize="16"/>
-                    <TextBox x:Name="HabitacionDepa" HorizontalAlignment="Left" Height="29" Margin="240,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" />
+                    <TextBox x:Name="HabitacionDepa" HorizontalAlignment="Left" Height="29" Margin="240,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" KeyDown="HabitacionDepa_KeyDown"/>
+                    <TextBox x:Name="NumeroDepart" HorizontalAlignment="Left" Height="30" Margin="266,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" Background="White" BorderBrush="#001f32" Foreground="#001f32"/>
                 </Grid>
 
             </Grid>
@@ -155,12 +157,13 @@
                     <Label Content="Rut :" Foreground="#DD000000" FontSize="16" FontFamily="Georgia" Margin="372,55,279,229"/>
                     <Label Content="Tipo :" Foreground="#DD000000" FontSize="16" FontFamily="Georgia" Margin="372,205,279,79"/>
                     <TextBox x:Name="NombreUsu" HorizontalAlignment="Left" Margin="125,55,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="30" Width="215" BorderBrush="#EC5269" FontSize="16" FontFamily="Georgia"/>
-                    <TextBox x:Name="ContraUsu" HorizontalAlignment="Left" Margin="125,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="30" Width="215" BorderBrush="#EC5269" FontSize="16" FontFamily="Georgia"/>
+                    <PasswordBox x:Name="ContraUsu" HorizontalAlignment="Left" Margin="125,105,0,0"  VerticalAlignment="Top" Height="30" Width="215" BorderBrush="#EC5269" FontSize="16" FontFamily="Georgia"/>
                     <TextBox x:Name="CorreoUsu" HorizontalAlignment="Left" Margin="125,155,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="30" Width="215" BorderBrush="#EC5269" FontSize="16" FontFamily="Georgia"/>
                     <TextBox x:Name="RutUsu" HorizontalAlignment="Left" Margin="457,55,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="30" Width="215" BorderBrush="#EC5269" FontSize="16" FontFamily="Georgia"/>
                     <TextBox x:Name="DirecUsu" HorizontalAlignment="Left" Margin="457,102,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="30" Width="215" BorderBrush="#EC5269" FontSize="16" FontFamily="Georgia"/>
-                    <TextBox x:Name="TelefonoUsu" HorizontalAlignment="Left" Margin="457,155,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="30" Width="215" BorderBrush="#EC5269" FontSize="16" FontFamily="Georgia"/>
+                    <TextBox x:Name="TelefonoUsu" HorizontalAlignment="Left" Margin="457,155,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="30" Width="215" BorderBrush="#EC5269" FontSize="16" FontFamily="Georgia" KeyDown="TelefonoUsu_KeyDown"/>
                     <Button Margin="295,261,295,21" Content="Agregar" Background="#EC5269" BorderBrush="#001f32" Click="btn_agregarUsuario"/>
+                    <ComboBox x:Name="cbx_tipo_usu" HorizontalAlignment="Left" Margin="462,205,0,0" VerticalAlignment="Top" Width="210" BorderBrush="#EC5269"/>
                 </Grid>
             </Grid>
         </Grid>

@@ -17,5 +17,7 @@ namespace WpfTurismo.Controlador
         public string telefono { get; set; }
         public int fk_id_tipo_usu { get; set; }
 
+
+
     }
 }
