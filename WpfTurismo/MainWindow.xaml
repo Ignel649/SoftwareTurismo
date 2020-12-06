@@ -39,7 +39,7 @@
                 <Image Source="Imagenes\Logo_turismo_real.png" Margin="10,10,752,246"/>
                 <Image Source="Imagenes\model_travel.png" Margin="451,0,10,0"/>
             </Grid>
-            <Grid x:Name="GridDepa" Height="460" Background="#EC5259" Visibility="Visible">
+            <Grid x:Name="GridDepa" Height="460" Background="#EC5259" Visibility="Collapsed">
                 <Grid Height="460" Width="1080" HorizontalAlignment="Left">
                     <TextBox x:Name="buscarEdi" HorizontalAlignment="Left" Height="30" Margin="50,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Background="White" BorderBrush="#001f32" Foreground="#001f32"/>
                     <Button Content="Buscar" HorizontalAlignment="Left" Margin="355,25,0,0" VerticalAlignment="Top" Width="75" Height="30" Background="#001f32" Foreground="White" BorderBrush="White" Click="btn_buscarEdi"/>
@@ -107,17 +107,15 @@
                 <Button Content="Buscar" HorizontalAlignment="Left" Margin="355,25,0,0" VerticalAlignment="Top" Width="75" Height="30" Background="#E0E0E0" Foreground="#FF303030" BorderBrush="White"/>
                 <DataGrid x:Name="DataGrid1" HorizontalAlignment="Left" Height="345" Margin="50,80,0,0" VerticalAlignment="Top" Width="975" Loaded="DataGrid1_Loaded">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Arrendatario" Width="*" Binding="{Binding Path=Arrendatario}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Departamento" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Comuna" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Region" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Fecha Arriendo" Width="*" IsReadOnly="True"/>
-                        <DataGridComboBoxColumn Header="Estado" Width="*"/>
+                        <DataGridTextColumn Header="Departamento" Width="*" Binding="{Binding Path=num_habitacion}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Edificio" Width="*" Binding="{Binding Path=edificio}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Valor" Width="*" Binding="{Binding Path=precio_noche}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Estado" Width="*" Binding="{Binding Path=estado}"/>
                         <materialDesign:DataGridTextColumn/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
-            <Grid x:Name="GridFina" Height="460" Background="#001f32" Visibility="Collapsed">
+            <Grid x:Name="GridFina" Height="460" Background="#001f32" Visibility="Visible">
                 <Grid Height="460" HorizontalAlignment="Right" Margin="0,5">
                     <Rectangle Height="100" Width="300" VerticalAlignment="Top" Margin="10,10" Fill="#EC5269" RadiusY="8.4" RadiusX="8.4"/>
                     <Rectangle Height="100" Width="300" VerticalAlignment="Center" Margin="10,10" Fill="#EC5269" RadiusY="8.4" RadiusX="8.4"/>

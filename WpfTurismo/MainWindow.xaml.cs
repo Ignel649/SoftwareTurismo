@@ -35,7 +35,8 @@ namespace WpfTurismo
             
             InitializeComponent();
             cargar();
-            
+            mostrarGrid();
+
             SeriesCollection = new SeriesCollection
             {
                 new ColumnSeries
@@ -68,13 +69,13 @@ namespace WpfTurismo
             cbx_EstadoDepa.Items.Add("Reservado");
             cbx_EstadoDepa.Items.Add("Reparacion");
             //-------Combobox Edificios
-            List<ObtenerEdificio> edif = Conexion.ObtenerEdificio();
+           /* List<ObtenerEdificio> edif = Conexion.ObtenerEdificio();
             
             
             foreach (ObtenerEdificio edi in edif)
             {
                 cbx_EdificioDepa.Items.Add(new { Text = edi.nombre, Value = edi.id });
-            }
+            }*/
             //--------Combobox Region
 
 
@@ -150,6 +151,14 @@ namespace WpfTurismo
                     GridUsuarios.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
+                    cbx_EdificioDepa.Items.Clear();
+                    List<ObtenerEdificio> edif = Conexion.ObtenerEdificio();
+
+                    foreach (ObtenerEdificio edi in edif)
+                    {
+                        cbx_EdificioDepa.Items.Add(new { Text = edi.nombre, Value = edi.id });
+                    }
+
                     GridCursor.Background = Brushes.MistyRose;
                     GridMain.Visibility = Visibility.Collapsed;
                     GridDepa.Visibility = Visibility.Collapsed;
@@ -281,7 +290,7 @@ namespace WpfTurismo
 
                 var tokenisado = login.token.token;
 
-               MessageBox.Show(Conexion.CrearEdi(tokenisado, edi));
+                MessageBox.Show(Conexion.CrearEdi(tokenisado, edi));
             }catch(Exception ex)
             {
                 MessageBox.Show(ex.ToString());
@@ -342,7 +351,7 @@ namespace WpfTurismo
                 BaniosDepa.Text = op[0].banios.ToString();
                 PisoDepa.Text = op[0].piso.ToString();
                 ValorDepa.Text = op[0].precio_noche.ToString();
-                cbx_EdificioDepa.SelectedValue = op[0].id;
+                cbx_EdificioDepa.SelectedItem = op[0].nombreEdificio;
                 cbx_EstadoDepa.SelectedItem = op[0].estado;
             }
             catch (Exception ex)
@@ -458,7 +467,15 @@ namespace WpfTurismo
             }
 
         }
+        private void mostrarGrid()
+        {
 
+            //List<ObtenerDepartamento> xd = new Conexion.DepaGrid();
+
+            this.DataGrid1.ItemsSource = null;
+            this.DataGrid1.ItemsSource = Conexion.DepaGrid();
+                
+        }
  
 
         private void DataGrid1_Loaded(object sender, RoutedEventArgs e)

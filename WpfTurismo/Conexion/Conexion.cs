@@ -260,6 +260,18 @@ namespace WpfTurismo
 
             return a;
         }
+        // Obtener departamentos para datagrid
+        public static List<ObtenerDepartamento> DepaGrid()
+        {
+            string url = "http://localhost:5000/api/departamentos";
+            WebClient conect = new WebClient();
+
+            string json = conect.DownloadString(url);
+
+            List<ObtenerDepartamento> xd = JsonConvert.DeserializeObject<List<ObtenerDepartamento>>(json);
+
+            return xd;
+        }
 
         public static void prueba(Edificio xd)
         {
