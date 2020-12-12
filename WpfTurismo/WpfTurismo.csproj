@@ -94,6 +94,7 @@
     <Compile Include="Controlador\Comuna.cs" />
     <Compile Include="Controlador\DataCombo.cs" />
     <Compile Include="Controlador\DatosUsuario.cs" />
+    <Compile Include="Controlador\depaGrid.cs" />
     <Compile Include="Controlador\Departamento.cs" />
     <Compile Include="Controlador\Edificio.cs" />
     <Compile Include="Controlador\ipe.cs" />

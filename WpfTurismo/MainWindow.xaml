@@ -35,7 +35,7 @@
             <Grid x:Name="GridCursor" Width="210" Height="5" Background="MistyRose" HorizontalAlignment="Left" Margin="10 0"/>
         </Grid>
         <Grid Height="460" Background="White" Visibility="Visible">
-            <Grid x:Name="GridMain" Height="460" Background="MistyRose" Visibility="Collapsed">
+            <Grid x:Name="GridMain" Height="460" Background="MistyRose" Visibility="Visible">
                 <Image Source="Imagenes\Logo_turismo_real.png" Margin="10,10,752,246"/>
                 <Image Source="Imagenes\model_travel.png" Margin="451,0,10,0"/>
             </Grid>
@@ -100,12 +100,30 @@
                     <TextBox x:Name="HabitacionDepa" HorizontalAlignment="Left" Height="29" Margin="240,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" BorderBrush="#001f32" Foreground="White" KeyDown="HabitacionDepa_KeyDown"/>
                     <TextBox x:Name="NumeroDepart" HorizontalAlignment="Left" Height="30" Margin="266,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" Background="White" BorderBrush="#001f32" Foreground="#001f32"/>
                 </Grid>
+                <Grid x:Name="GridServicios" Background="#429696" Margin="507,0,10,0" Visibility="Collapsed">
+                    <Button Content="Añadir" HorizontalAlignment="Left" Margin="56,358,0,0" VerticalAlignment="Top" Width="100" Background="#EC5259" BorderBrush="White"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="50,100,0,0" VerticalAlignment="Top" Width="120" BorderBrush="Black"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="50,150,0,0" VerticalAlignment="Top" Width="120" BorderBrush="black"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="50,200,0,0" VerticalAlignment="Top" Width="120" BorderBrush="black"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="50,250,0,0" VerticalAlignment="Top" Width="120" BorderBrush="black"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="50,300,0,0" VerticalAlignment="Top" Width="120" BorderBrush="black"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="377,100,0,0" VerticalAlignment="Top" Width="120" BorderBrush="Black"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="377,150,0,0" VerticalAlignment="Top" Width="120" BorderBrush="black"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="377,200,0,0" VerticalAlignment="Top" Width="120" BorderBrush="black"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="377,250,0,0" VerticalAlignment="Top" Width="120" BorderBrush="black"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="377,300,0,0" VerticalAlignment="Top" Width="120" BorderBrush="black"/>
+                    <Button Content="Añadir" HorizontalAlignment="Left" Margin="388,358,0,0" VerticalAlignment="Top" Width="100" Background="#EC5259" BorderBrush="White"/>
+                    <Label Content="Servicios" HorizontalAlignment="Left" Margin="71,35,0,0" VerticalAlignment="Top" FontSize="20"/>
+                    <Label Content="Implementos" HorizontalAlignment="Left" Margin="377,35,0,0" VerticalAlignment="Top" FontSize="20"/>
+                    <Button Content="Modificar" HorizontalAlignment="Left" Margin="56,407,0,0" VerticalAlignment="Top" Width="100" Background="#EC5259" BorderBrush="White"/>
+                    <Button Content="Modificar" HorizontalAlignment="Left" Margin="388,407,0,0" VerticalAlignment="Top" Width="100" Background="#EC5259" BorderBrush="White"/>
+                </Grid>
 
             </Grid>
             <Grid x:Name="GridAdmin" Height="460" Background="Orange" Visibility="Collapsed">
                 <TextBox HorizontalAlignment="Left" Height="30" Margin="50,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Background="White" BorderBrush="#FF303030" Foreground="#001f32"/>
                 <Button Content="Buscar" HorizontalAlignment="Left" Margin="355,25,0,0" VerticalAlignment="Top" Width="75" Height="30" Background="#E0E0E0" Foreground="#FF303030" BorderBrush="White"/>
-                <DataGrid x:Name="DataGrid1" HorizontalAlignment="Left" Height="345" Margin="50,80,0,0" VerticalAlignment="Top" Width="975" Loaded="DataGrid1_Loaded">
+                <DataGrid x:Name="DataGrid1" HorizontalAlignment="Left" Height="345" Margin="50,80,0,0" VerticalAlignment="Top" Width="975" Loaded="DataGrid1_Loaded" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Departamento" Width="*" Binding="{Binding Path=num_habitacion}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Edificio" Width="*" Binding="{Binding Path=edificio}" IsReadOnly="True"/>
@@ -115,23 +133,9 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
-            <Grid x:Name="GridFina" Height="460" Background="#001f32" Visibility="Visible">
-                <Grid Height="460" HorizontalAlignment="Right" Margin="0,5">
-                    <Rectangle Height="100" Width="300" VerticalAlignment="Top" Margin="10,10" Fill="#EC5269" RadiusY="8.4" RadiusX="8.4"/>
-                    <Rectangle Height="100" Width="300" VerticalAlignment="Center" Margin="10,10" Fill="#EC5269" RadiusY="8.4" RadiusX="8.4"/>
-                    <Rectangle Height="100" Width="300" VerticalAlignment="Bottom" Margin="10,20" Fill="#EC5269" RadiusY="8.4" RadiusX="8.4"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="25,20,0,0" TextWrapping="Wrap" Text="Ganancia Anual" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="64,46,0,0" TextWrapping="Wrap" Text="5.215.884" VerticalAlignment="Top" Foreground="White" FontSize="48" Width="229" TextAlignment="Right"/>
-                    <Label Content="$" HorizontalAlignment="Left" Margin="25,42,0,0" VerticalAlignment="Top" FontSize="48" Height="68"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="25,190,0,0" TextWrapping="Wrap" Text="Ganancia Mensual" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="64,216,0,0" TextWrapping="Wrap" Text="704.654" VerticalAlignment="Top" Foreground="White" FontSize="48" Width="229" TextAlignment="Right"/>
-                    <Label Content="$" HorizontalAlignment="Left" Margin="25,212,0,0" VerticalAlignment="Top" FontSize="48" Height="68"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="25,350,0,0" TextWrapping="Wrap" Text="Ganancia Semanal" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="64,376,0,0" TextWrapping="Wrap" Text="125.236" VerticalAlignment="Top" Foreground="White" FontSize="48" Width="229" TextAlignment="Right"/>
-                    <Label Content="$" HorizontalAlignment="Left" Margin="25,372,0,0" VerticalAlignment="Top" FontSize="48" Height="68"/>
-                </Grid>
+            <Grid x:Name="GridFina" Height="460" Background="#001f32" Visibility="Collapsed">
                 <Grid HorizontalAlignment="Left" Width="700" Margin="10,100,0,10">
-                    <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Left" Foreground="White">
+                    <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Left" Foreground="White" Margin="0,0,-335,0">
                         <lvc:CartesianChart.AxisX>
                             <lvc:Axis Title="Meses" Labels="{Binding Labels}"></lvc:Axis>
                         </lvc:CartesianChart.AxisX>
@@ -140,7 +144,23 @@
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
                 </Grid>
-                <Button Content="Descargar PDF" Width="150" Margin="580,40,350,389" Background="#429696" BorderBrush="#429696"/>
+                <Button x:Name="btn_DescargarPdf" Content="Descargar PDF" Width="150" Margin="895,36,35,392" Background="#429696" BorderBrush="#429696" Click="btn_DescargarPdf_Click"/>
+                <Label Content="Ganancias Ultimos 2 Años" HorizontalAlignment="Left" Margin="71,12,0,0" VerticalAlignment="Top" FontSize="48"/>
+                <Button Content="Ganancias Actuales" Margin="708,36,216,392" Background="#429696" BorderBrush="#429696" Click="btn_ganancias"/>
+                <Grid x:Name="gridValues" HorizontalAlignment="Right" Margin="0,5,0,0" Visibility="Collapsed" Background="#001f32" Width="372">
+                    <Rectangle Height="100" Width="300" VerticalAlignment="Top" Margin="10,10" Fill="#EC5269" RadiusY="8.4" RadiusX="8.4"/>
+                    <Rectangle Height="100" Width="300" VerticalAlignment="Center" Margin="10,10" Fill="#EC5269" RadiusY="8.4" RadiusX="8.4"/>
+                    <Rectangle Height="100" Width="300" VerticalAlignment="Bottom" Margin="10,20" Fill="#EC5269" RadiusY="8.4" RadiusX="8.4"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="47,17,0,0" TextWrapping="Wrap" Text="Ganancia Anual" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="103,46,0,0" TextWrapping="Wrap" Text="5.215.884" VerticalAlignment="Top" Foreground="White" FontSize="48" Width="229" TextAlignment="Right"/>
+                    <Label Content="$" HorizontalAlignment="Left" Margin="64,42,0,0" VerticalAlignment="Top" FontSize="48" Height="68"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="47,188,0,0" TextWrapping="Wrap" Text="Ganancia Mensual" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="103,219,0,0" TextWrapping="Wrap" Text="704.490" VerticalAlignment="Top" Foreground="White" FontSize="48" Width="229" TextAlignment="Right"/>
+                    <Label Content="$" HorizontalAlignment="Left" Margin="64,212,0,0" VerticalAlignment="Top" FontSize="48" Height="68"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="47,348,0,0" TextWrapping="Wrap" Text="Ganancia Semanal" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="98,376,0,0" TextWrapping="Wrap" Text="178.900" VerticalAlignment="Top" Foreground="White" FontSize="48" Width="229" TextAlignment="Right"/>
+                    <Label Content="$" HorizontalAlignment="Left" Margin="64,372,0,0" VerticalAlignment="Top" FontSize="48" Height="68"/>
+                </Grid>
             </Grid>
             <Grid x:Name="GridUsuarios" Height="460" Background="#001f32" Visibility="Collapsed">
                 <Image Source="Imagenes/Usuario.png" Margin="-134,10,-134,-162" Stretch="Fill"/>

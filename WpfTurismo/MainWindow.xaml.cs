@@ -42,19 +42,19 @@ namespace WpfTurismo
                 new ColumnSeries
                 {
                     Title = "2018",
-                    Values = new ChartValues<double> { 10, 50, 39, 50 }
+                    Values = new ChartValues<double> { 1200000,1400000 ,1000000 ,600000 ,450000,500000,650000,470000,520000,300000,400000,900000}
                 }
             };
             SeriesCollection.Add(new ColumnSeries
             {
                 Title = "2019",
-                Values = new ChartValues<double> { 11, 56, 42 }
+                Values = new ChartValues<double> { 1500000, 1350000, 800000 ,740000,600000,350000,480000,520000,460000,360000,600000,960000}
             });
 
             //also adding values updates and animates the chart automatically
-            SeriesCollection[1].Values.Add(48d);
+            //SeriesCollection[1].Values.Add(48d);
             
-            Labels = new[] { "Enero", "Febrero", "Marzo", "Abril" };
+            Labels = new[] { "Enero", "Febrero", "Marzo", "Abril" ,"Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
             Formatter = value => value.ToString("N");
 
             DataContext = this;
@@ -140,6 +140,8 @@ namespace WpfTurismo
                     GridAdmin.Visibility = Visibility.Collapsed;
                     GridFina.Visibility = Visibility.Collapsed;
                     GridUsuarios.Visibility = Visibility.Collapsed;
+                    GridServicios.Visibility = Visibility.Collapsed;
+                    gridValues.Visibility = Visibility.Collapsed;
                     break;
                 case 1:
                     GridCursor.Background = Brushes.YellowGreen;
@@ -149,6 +151,8 @@ namespace WpfTurismo
                     GridAdmin.Visibility = Visibility.Collapsed;
                     GridFina.Visibility = Visibility.Collapsed;
                     GridUsuarios.Visibility = Visibility.Collapsed;
+                    GridServicios.Visibility = Visibility.Collapsed;
+                    gridValues.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
                     cbx_EdificioDepa.Items.Clear();
@@ -166,6 +170,8 @@ namespace WpfTurismo
                     GridAdmin.Visibility = Visibility.Collapsed;
                     GridFina.Visibility = Visibility.Collapsed;
                     GridUsuarios.Visibility = Visibility.Collapsed;
+                    GridServicios.Visibility = Visibility.Collapsed;
+                    gridValues.Visibility = Visibility.Collapsed;
                     break;
                 case 3:
                     GridCursor.Background = Brushes.Orange;
@@ -175,6 +181,8 @@ namespace WpfTurismo
                     GridAdmin.Visibility = Visibility.Visible;
                     GridFina.Visibility = Visibility.Collapsed;
                     GridUsuarios.Visibility = Visibility.Collapsed;
+                    GridServicios.Visibility = Visibility.Collapsed;
+                    gridValues.Visibility = Visibility.Collapsed;
                     break;
                 case 4:
                     GridCursor.Background = Brushes.DodgerBlue;
@@ -184,6 +192,8 @@ namespace WpfTurismo
                     GridAdmin.Visibility = Visibility.Collapsed;
                     GridFina.Visibility = Visibility.Visible;
                     GridUsuarios.Visibility = Visibility.Collapsed;
+                    GridServicios.Visibility = Visibility.Collapsed;
+                    gridValues.Visibility = Visibility.Collapsed;
                     break;
             }
 
@@ -470,10 +480,24 @@ namespace WpfTurismo
         private void mostrarGrid()
         {
 
-            //List<ObtenerDepartamento> xd = new Conexion.DepaGrid();
+            List<depaGrid> dgrid = new List<depaGrid>();
+
+            List<ObtenerDepartamento> xd = Conexion.DepaGrid();
+            
+            
+            foreach(ObtenerDepartamento x in xd)
+            {
+
+                dgrid.Add(new depaGrid {num_habitacion= x.num_habitacion,precio_noche= x.precio_noche, edificio= x.edificio,estado= x.estado });
+             
+
+            }
+            
 
             this.DataGrid1.ItemsSource = null;
-            this.DataGrid1.ItemsSource = Conexion.DepaGrid();
+            this.DataGrid1.ItemsSource = dgrid;
+
+            
                 
         }
  
@@ -570,5 +594,14 @@ namespace WpfTurismo
 
         }
 
+        private void btn_ganancias(object sender, RoutedEventArgs e)
+        {
+            gridValues.Visibility = Visibility.Visible;
+        }
+
+        private void btn_DescargarPdf_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

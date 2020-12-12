@@ -16,7 +16,9 @@ using System.Runtime.InteropServices.WindowsRuntime;
 namespace WpfTurismo
 {
     public class Conexion
+
     {
+
         //Metodo para obtener la direccion ip para el registro
         public static string ObtenerIpAdrees()
         {
